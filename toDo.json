@@ -1,5 +1,5 @@
-{
-  "t1": "liste t1                                      ",
-  "t2": "liste t2",
-  "t3": "liste t3"
-}
+[
+{"toDo":"liste t1","done":true},
+{"toDo":"liste t2","done":false},
+{"toDo":"liste t3","done":true}
+]

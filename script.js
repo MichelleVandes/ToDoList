@@ -1,5 +1,5 @@
-let monTab, maDonnee;
-let body, tbl, tblbody;
+let monTab, maDonnee, etatTache;
+let body, tbl, tblbody, tblThead;
 let row, cell, cellText;
 
 // Récupération des données dans fichier json
@@ -24,18 +24,27 @@ function generate_table() {
   // création élémént table puis T
   tbl = document.createElement("table");
   tblBody = document.createElement("tbody");
+  tblThead = document.createElement("thead");
 
   // creation des lignes
-  for (let toDo in monTab) {
-
-    maDonnee = monTab[toDo];
-
+  for (let newData in monTab) {
+    maDonnee = monTab[newData];
+    console.log(maDonnee);
     // création ligne tableau <tr>
     row = document.createElement("tr");
 
-    // création cellule de tableau <td> rt ajout du texte
+    // création cellule de tableau <td> et ajout du texte
     cell = document.createElement("td");
-    cellText = document.createTextNode(maDonnee);
+    cellText = document.createTextNode(maDonnee.toDo);
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+    // création cellule de tableau <td> et ajout du texte
+    cell = document.createElement("td");
+    if (maDonnee.done) {etatTache = "Réalisé"}
+    else {  
+      etatTache = "A faire";
+    }
+    cellText = document.createTextNode(etatTache);
     cell.appendChild(cellText);
     row.appendChild(cell);
 
@@ -44,13 +53,6 @@ function generate_table() {
     cell = document.createElement("td");
     let button = document.createElement("button");
     button.innerText = "edit";
-
-    //button.click = alert("Button is clicked");
-   
-//button.type = "Submit"
-    // button.addEventListener("click", function (toDo) {
-    //   console.log(toDo);
-    // });
 
     button.addEventListener("click", edit.bind(null, maDonnee));
 
@@ -72,4 +74,30 @@ function generate_table() {
 function edit(toDo) { 
  console.log("Button is clicked dans la fonction edit");
   console.log(toDo)
+}
+
+
+function ajouteTache() {
+  console.log("Button clické dans la fonction ajouteTache");
+ 
+
+let newTache = document.getElementById("saisie").value;
+ console.log(newTache);
+
+ // Suppression des blancs à gauche et à droite de la zone de texte
+ newTache = newTache.trim();
+          console.log(newTache); 
+
+ // Vérification existance de la tache
+ for (let newData in monTab) {
+   maDonnee = monTab[newData].toDo;
+ if ((maDonnee == newTache)) {
+
+   console.log("existe déjà");
+ }
+ }
+ // Ajout de la tache
+ // Modification d'une tache existante
+ // Suppression d'une tache existante
+
 }
