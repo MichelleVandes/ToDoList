@@ -95,8 +95,25 @@ let newTache = document.getElementById("saisie").value;
 
    console.log("existe déjà");
  }
+ else {
+   function test() {
+     let obj = {
+       toDo: "test",
+       done: true,
+     };
+
+     let donnees = JSON.stringify(obj);
+     const monFic = "./toDo.json";
+   }
+
+
+   // Ajout de la tache
+
  }
- // Ajout de la tache
+
+ }
+
+ 
  // Modification d'une tache existante
  // Suppression d'une tache existante
 
