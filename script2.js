@@ -1,42 +1,41 @@
 // Ajouter une nouvelle ligne de tache to do :
 let numliste = -1;
-let liste; 
+let toDoEntry = document.getElementById('toDoEntry');
+console.log (toDoEntry.value)
 
-function Ajouter() {
-  // Récupération de la tache
-  let nouvelleTache = document.getElementById("valeur").value;
+function ajouteTache() {
 
-  // Suppression des blancs à gauche et à droite de la zone de texte
-  nouvelleTache = nouvelleTache.trim();
-  if (nouvelleTache == "") {
-    alert("marche pas sans texte!");
+  // Suppression des blancs 
+  toDoEntry.value = toDoEntry.value.trim();
+ 
+
+  if(toDoEntry.value == "") {
+    alert("Veuillez saisir du texte avant de valider")
+    toDoEntry.value = "";  
+    toDoEntry.focus();
     return;
-  } else {
-    //Création nouvelle ligne, et incrémentation liste pour maj
-     liste = document.createElement("ol");
-     numliste += 1; 
-     liste.id = "id"+numliste;
-     numliste +=1; 
-
-    // Bouton
-    let button = document.createElement("button");
-    button.innerText = "edit";
-    button.addEventListener("click", edit.bind(null, numliste));
-    liste.appendChild(button);
-
-    // Texte
-
-    let t = document.createTextNode(nouvelleTache);
-   
-    liste.appendChild(t);
-
-    document.getElementById("valeur").value = "";
-    document.getElementById("maListe").appendChild(liste);
   }
-}
+
+  // Récupération de la tache
+  console.log (toDoEntry.value)
+  // Création d'une nouvelle ligne
+  const newDiv = document.createElement("div"); // ajouter la classe
+    // Ajout element de liste; et l'associer à la div
+    const newLine = document.createElement("li"); // ajouter la classe
+    newLine.innerText = toDoEntry.value
+    newDiv.appendChild(newLine);
+    // Ajout du bouton de mise à jour
+    const newButton = document.createElement("button");// ajouter la classe
+    newButton.value = "X"
+    newDiv.appendChild(newButton);
+
+ // insert de la nouvelle ligne dans la liste préexistante dans html
+ const toDoList = document.getElementById('toDoList');
+ toDoList.appendChild(newDiv);
 
 
-function edit(numliste) {
-  console.log("oups");
-  console.log(numliste);
+ // RAZ zone d'entrée 
+ toDoEntry.value = "";  
+ toDoEntry.focus();
 }
+
