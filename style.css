@@ -2,3 +2,22 @@ body {
   background-color: #ebebeb;
   color: blue;
 }
+
+
+.to_Do {
+  display:flex; 
+  justify-content: space-between;
+}
+
+.en_Cours {
+  background-color: cyan;
+}
+.red {
+  color: red;
+}
+.disabled{
+				cursor: default;
+				pointer-events: none;        
+				text-decoration: none;
+				color: grey;
+			}
