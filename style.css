@@ -1,23 +1,31 @@
 body {
   background-color: #ebebeb;
   color: blue;
+  font-size: large;
+  line-height: 2rem;
 }
 
+.to_Do_Div {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
 
-.to_Do {
-  display:flex; 
-  justify-content: space-between;
+   
+}
+
+.to_Do_Button {
+  position: fixed;
+  margin-left: 2rem;
+  text-align: center;
+  border-color: blue;
+}
+.to_Do_Li {
+  position: fixed;
+ margin-left: 7rem;
+ margin-right: 2rem;
+
 }
 
 .en_Cours {
   background-color: cyan;
 }
-.red {
-  color: red;
-}
-.disabled{
-				cursor: default;
-				pointer-events: none;        
-				text-decoration: none;
-				color: grey;
-			}
