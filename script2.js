@@ -1,7 +1,7 @@
 // Initialisation liste :
 const toDoEntry = document.getElementById("toDoEntry");
 let increment = 0;
-let id_Svg, newLine, newDiv, newButton;
+let id_Svg, newList, newSpan, newButton;
 
 document.getElementById("maj_Line").disabled =true;
 document.getElementById("del_Line").disabled = true;
@@ -22,27 +22,27 @@ function ajouteTache() {
   // Récupération de la tache
   console.log("Valeur Entrée : ", toDoEntry.value);
   // Création d'une nouvelle ligne
-  newDiv = document.createElement("div"); // ajouter la classe
-  newDiv.classList += "to_Do";
-  // Ajout element de liste; et l'associer à la div
-  newLine = document.createElement("li"); // ajouter la classe
-  newLine.innerText = toDoEntry.value;
+  newList = document.createElement("li"); // ajouter la classe
+  newList.classList += "to_Do";
+  // Ajout element de texte; et l'associer à la liste
+  newSpan = document.createElement("span"); // ajouter la classe
+  newSpan.innerText = toDoEntry.value;
 
   increment += 1;
   const aa = "ID_" + increment;
-  newLine.id = aa;
+  newSpan.id = aa;
 
-  newDiv.appendChild(newLine);
+  newList.appendChild(newSpan);
   // Ajout du bouton de mise à jour
   newButton = document.createElement("button"); // ajouter la classe
   //newButton.onclick = modifTache(aa)
   newButton.addEventListener("click", modifTache.bind(null, aa));
   newButton.innerText = "Modif";
-  newDiv.appendChild(newButton);
+  newList.appendChild(newButton);
 
   // insert de la nouvelle ligne dans la liste préexistante dans html
   const toDoList = document.getElementById("toDoList");
-  toDoList.appendChild(newDiv);
+  toDoList.appendChild(newList);
 
   // sauvegarge de la ligne dans tableau listTab
 
@@ -55,12 +55,12 @@ function ajouteTache() {
 function modifTache(id_Recup) {
   // Récupération de la tache via le focus, soit n°liste active
   console.log("line.id : ", id_Recup);
-  let ligneMaj = document.getElementById(id_Recup);
-  ligneMaj.className += "en_Cours";
+  let spanMaj = document.getElementById(id_Recup);
+  spanMaj.className += "en_Cours";
 
   // Bascule du texte dans zone de saisie
-  console.log("line.texte : ", ligneMaj.innerHTML);
-  document.getElementById("toDoEntry").value = ligneMaj.innerHTML;
+  console.log("span.texte : ", spanMaj.innerHTML);
+  document.getElementById("toDoEntry").value = spanMaj.innerHTML;
 
   // Griser tous les boutons clickables de la liste :
   var myButton = document.querySelectorAll("button");
@@ -97,32 +97,32 @@ function newTache() {
   console.log("Valeur Entrée : ", toDoEntry.value);
   
   // Création d'une nouvelle ligne
-  const newDiv = document.createElement("div"); // ajouter la classe
-  newDiv.classList += "to_Do_Div";
+  newList = document.createElement("li"); // ajouter la classe
+  newList.classList += "to_Do_List";
   increment += 1;
-  newDiv.id = "div_" + increment;
+  newList.id = "list_" + increment;
   // Ajout element de liste; et l'associer à la div
-  newLine = document.createElement("li"); // ajouter la classe
-  newLine.innerText = toDoEntry.value;
-  newLine.id = "li_" + increment;
-  newLine.classList += "to_Do_Li";
+  newSpan = document.createElement("span"); // ajouter la classe
+  newSpan.innerText = toDoEntry.value;
+  newSpan.id = "span_" + increment;
+  newSpan.classList += "to_Do_Span";
 
 
   // Ajout du bouton de mise à jour
   const newButton = document.createElement("button"); // ajouter la classe
-  newLine.id 
-  newButton.addEventListener("click", modifTache.bind(null, newLine.id));
+  newSpan.id 
+  newButton.addEventListener("click", modifTache.bind(null, newSpan.id));
   newButton.innerText = "Modif";
   newButton.id = "bt_" + increment;
   newButton.classList += "to_Do_Button";
 
  // Ajout du bouton et texte dans la div
-  newDiv.appendChild(newButton);
-  newDiv.appendChild(newLine);
+  newList.appendChild(newButton);
+  newList.appendChild(newSpan);
 
   // insert de la nouvelle ligne dans la liste préexistante dans html
   const toDoList = document.getElementById("toDoList");
-  toDoList.appendChild(newDiv);
+  toDoList.appendChild(newList);
 
   // RAZ zone d'entrée
   toDoEntry.value = "";
@@ -162,13 +162,13 @@ function delTache() {
 
   let bb  = id_Svg.match(/(\d+)/);
   console.log("bb : ", bb[0])
-  let aa = "div_" + bb[0];
+  let aa = "list_" + bb[0];
   console.log("aa : ", aa)
-  newDiv = document.getElementById(aa);
+  newList = document.getElementById(aa);
 
   // Supprime tous les enfant d'un élément
-  while (newDiv.firstChild) {
-    newDiv.removeChild(newDiv.firstChild);
+  while (newList.firstChild) {
+    newList.removeChild(newList.firstChild);
   }
   styleNewLine()
 }
@@ -189,7 +189,6 @@ console.log("StyleNewLine ");
   toDoEntry.value = "";
   toDoEntry.focus();
 }
-
 
 function styleMajLine() { // En cours de mise à jour
   var myButton = document.querySelectorAll("button");
