@@ -5,26 +5,28 @@ body {
   line-height: 2rem;
 }
 
-.to_Do_Div {
-  margin-top: 1rem;
-  text-align: center;
-  display: flex;
+ul {
+  list-style-type: none;
+}
+/* .to_Do_Li {
 
-   
+} */
+
+.to_Do_Span {
+  text-align: center;
+  position: fixed;
+    margin-left: 2rem;
+
+
 }
 
 .to_Do_Button {
-  position: fixed;
+  justify-content: start;
   margin-left: 2rem;
   text-align: center;
   border-color: blue;
 }
-.to_Do_Li {
-  position: fixed;
- margin-left: 7rem;
- margin-right: 2rem;
 
-}
 
 .en_Cours {
   background-color: cyan;

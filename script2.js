@@ -23,20 +23,21 @@ function ajouteTache() {
   console.log("Valeur Entrée : ", toDoEntry.value);
   // Création d'une nouvelle ligne
   newList = document.createElement("li"); // ajouter la classe
-  newList.classList += "to_Do";
+  newList.classList += "to_Do_Li";
   // Ajout element de texte; et l'associer à la liste
   newSpan = document.createElement("span"); // ajouter la classe
   newSpan.innerText = toDoEntry.value;
+  newSpan.classList +=   "to_Do_Span"
 
   increment += 1;
   const aa = "ID_" + increment;
   newSpan.id = aa;
 
   newList.appendChild(newSpan);
-  // Ajout du bouton de mise à jour
+  // Bouton de mise à jour
   newButton = document.createElement("button"); // ajouter la classe
-  //newButton.onclick = modifTache(aa)
   newButton.addEventListener("click", modifTache.bind(null, aa));
+  newButton.classList += "to_Do_Button";
   newButton.innerText = "Modif";
   newList.appendChild(newButton);
 
@@ -170,6 +171,8 @@ function delTache() {
   while (newList.firstChild) {
     newList.removeChild(newList.firstChild);
   }
+ aa = "li_" + bb[0];
+  newList.remove(aa);
   styleNewLine()
 }
 
