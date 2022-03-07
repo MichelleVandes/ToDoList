@@ -7,6 +7,12 @@ document.getElementById("maj_Line").disabled =true;
 document.getElementById("del_Line").disabled = true;
 
 
+
+
+
+
+
+
 // Ajouter une nouvelle ligne de tache to do :
 function ajouteTache() {
   // Suppression des blancs
@@ -57,7 +63,8 @@ function modifTache(id_Recup) {
   // Récupération de la tache via le focus, soit n°liste active
   console.log("line.id : ", id_Recup);
   let spanMaj = document.getElementById(id_Recup);
-  spanMaj.className += "en_Cours";
+
+  spanMaj.classList.add("en_Cours");
 
   // Bascule du texte dans zone de saisie
   console.log("span.texte : ", spanMaj.innerHTML);
@@ -143,6 +150,8 @@ function majTache() {
   }
   // Modification du texte dans la liste
   document.getElementById(id_Svg).innerHTML = toDoEntry.value;
+
+  document.getElementById(id_Svg).classList.remove("en_Cours");
   // DéGriser tous les boutons clickables de la liste :
   var myButton = document.querySelectorAll("button");
   console.log("myButton : ", myButton);
@@ -157,6 +166,10 @@ function majTache() {
 
 function delTache() {
   console.log("id_Svg :", id_Svg);
+  var reponse = window.confirm("Etes-vous certain de supprimer cette tâche ?"); 
+  if (reponse = "Non") {
+  return
+  }
 
   // Suppression de la ligne dans la liste
   document.getElementById(id_Svg).innerHTML = toDoEntry.value;
@@ -192,6 +205,7 @@ console.log("StyleNewLine ");
   toDoEntry.value = "";
   toDoEntry.focus();
 }
+
 
 function styleMajLine() { // En cours de mise à jour
   var myButton = document.querySelectorAll("button");

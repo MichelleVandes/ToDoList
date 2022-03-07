@@ -5,12 +5,25 @@ body {
   line-height: 2rem;
 }
 
+.conteneur{
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.to_Do {
+width: 80%;
+margin-top: 1rem;
+margin-left: 10%;
+height: auto;
+min-height: 200px;
+ 
+  border: 1px solid black;
+}
+
 ul {
   list-style-type: none;
 }
-/* .to_Do_Li {
 
-} */
 
 .to_Do_Span {
   text-align: center;
@@ -22,12 +35,27 @@ ul {
 
 .to_Do_Button {
   justify-content: start;
-  margin-left: 2rem;
+  /* margin-left: 2rem; */
   text-align: center;
   border-color: blue;
 }
 
 
 .en_Cours {
-  background-color: cyan;
+  background-color: rgb(231, 14, 184);
 }
+
+
+footer{
+line-height: 1rem;
+font-size: 0.6em;
+background:rgb(145, 135, 123);
+position:absolute;
+bottom:0;
+width:100%;
+padding-top:1px;
+height: 30px;
+
+}
+
+ 
