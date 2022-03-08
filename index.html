@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="./style.css" />
-   <script src="./script2.js" defer></script>
+   <script src="./script.js" defer></script>
  
     <title>ToDoList</title>
 </head>
@@ -18,22 +18,29 @@
 
     <input type="text" id="toDoEntry" />
 
-
+<div .display_None>
     <button id="new_Line" type="button" onclick="newTache()">Ajouter</button>
 
     <button Id="maj_Line" type="button" onclick="majTache()">Modifier</button>
     <button id="del_Line" type="button" onclick="delTache()">Supprimer</button>
+</div>
+
 </form>
 
 </body> 
-<div class=conteneur>
-<div class="to_Do">
+<div class="conteneur">
+
+<div class="display_On" id="divToDo">
+
+    <img class ="plage" src="/beach.png" alt="Plage" id="plage">
+    <img class ="plage"src="/pen-filler-156146.svg" alt=""id="stylo1">
     <ul id="toDoList"></ul>
-  
+
+
+</div>
+    <img class="stylo display_None" src="/fountain-pen-2027181_1280.png" alt="Stylo Plume" id="stylo2">
 </div>
 
-  <img src="/fountain-pen-2027181_1280.png" alt="Stylo Plume">
-</div>
 
 
 <footer>

@@ -1,120 +1,212 @@
-let monTab, maDonnee, etatTache;
-let body, tbl, tblbody, tblThead;
-let row, cell, cellText;
+// Initialisation liste :
+const toDoEntry = document.getElementById("toDoEntry");
+let increment = 0;
+let id_Svg, newList, newSpan, newButton, newDiv;
 
-// Récupération des données dans fichier json
-monFic = "./toDo.json";
+document.getElementById("maj_Line").disabled = true;
+document.getElementById("del_Line").disabled = true;
 
-Read_Json(monFic);
+// Ajouter une nouvelle ligne de tache to do :
+function ajouteTache() {
+  // Suppression des blancs
+  toDoEntry.value = toDoEntry.value.trim();
 
-function Read_Json(monFic) {
-  fetch(monFic).then(function (response) {
-    response.json().then(function (data) {
-      monTab = data;
-      console.log(monTab)
-      generate_table();
-    });
-  });
-}
-
-function generate_table() {
-  // get the reference for the body
-  body = document.getElementsByTagName("body")[0];
-
-  // création élémént table puis T
-  tbl = document.createElement("table");
-  tblBody = document.createElement("tbody");
-  tblThead = document.createElement("thead");
-
-  // creation des lignes
-  for (let newData in monTab) {
-    maDonnee = monTab[newData];
-    console.log(maDonnee);
-    // création ligne tableau <tr>
-    row = document.createElement("tr");
-
-    // création cellule de tableau <td> et ajout du texte
-    cell = document.createElement("td");
-    cellText = document.createTextNode(maDonnee.toDo);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-    // création cellule de tableau <td> et ajout du texte
-    cell = document.createElement("td");
-    if (maDonnee.done) {etatTache = "Réalisé"}
-    else {  
-      etatTache = "A faire";
-    }
-    cellText = document.createTextNode(etatTache);
-    cell.appendChild(cellText);
-    row.appendChild(cell);
-
-    // création cellule de tableau <td> avec bouton de modification de texte
-
-    cell = document.createElement("td");
-    let button = document.createElement("button");
-    button.innerText = "edit";
-
-    button.addEventListener("click", edit.bind(null, maDonnee));
-
-    cell.appendChild(button);
-    row.appendChild(cell);
-
-    // Ajoute ligne
-    tblBody.appendChild(row);
+  if (toDoEntry.value == "") {
+    alert("Veuillez saisir du texte avant de valider");
+    toDoEntry.value = "";
+    toDoEntry.focus();
+    return;
   }
 
-  // put the <tbody> in the <table>
-  tbl.appendChild(tblBody);
-  // appends <table> into <body>
-  body.appendChild(tbl);
-  // sets the border attribute of tbl to 2;
-  tbl.setAttribute("border", "2");
+  // Récupération de la tache
+  // Création d'une nouvelle ligne
+  newList = document.createElement("li"); // ajouter la classe
+  newList.classList += "to_Do_Li";
+  // Ajout element de texte; et l'associer à la liste
+  newSpan = document.createElement("span"); // ajouter la classe
+  newSpan.innerText = toDoEntry.value;
+  newSpan.classList += "to_Do_Span";
+
+  increment += 1;
+  const aa = "ID_" + increment;
+  newSpan.id = aa;
+
+  newList.appendChild(newSpan);
+  // Bouton de mise à jour
+  newButton = document.createElement("button"); // ajouter la classe
+  newButton.addEventListener("click", modifTache.bind(null, aa));
+  newButton.classList += "to_Do_Button";
+  newButton.innerText = "Modif";
+  newList.appendChild(newButton);
+
+  // insert de la nouvelle ligne dans la liste préexistante dans html
+  const toDoList = document.getElementById("toDoList");
+  toDoList.appendChild(newList);
+
+  // RAZ zone d'entrée
+  toDoEntry.value = "";
+  toDoEntry.focus();
 }
 
-function edit(toDo) { 
- console.log("Button is clicked dans la fonction edit");
-  console.log(toDo)
+function modifTache(id_Recup) {
+  // Récupération de la tache via le focus, soit n°liste active
+  let spanMaj = document.getElementById(id_Recup);
+
+  spanMaj.classList.add("en_Cours");
+
+  // Bascule du texte dans zone de saisie
+  console.log("span.texte : ", spanMaj.innerHTML);
+  document.getElementById("toDoEntry").value = spanMaj.innerHTML;
+
+  // Griser tous les boutons clickables de la liste :
+  var myButton = document.querySelectorAll("button");
+  for (var i = 0; i < myButton.length; i++) {
+    myButton[i].disabled = true;
+  }
+
+  // Modification de l'état des boutons de Créat/maj
+  document.getElementById("maj_Line").disabled = false;
+  document.getElementById("del_Line").disabled = false;
+  document.getElementById("new_Line").disabled = true;
+
+  toDoEntry.focus();
+  id_Svg = id_Recup;
+  return id_Svg;
 }
 
+// Ajouter une nouvelle ligne de tache to do :
+function newTache() {
+  // Suppression des blancs
+  toDoEntry.value = toDoEntry.value.trim();
 
-function ajouteTache() {
-  console.log("Button clické dans la fonction ajouteTache");
+  if (toDoEntry.value == "") {
+    alert("Veuillez saisir du texte avant de valider");
+    toDoEntry.value = "";
+    toDoEntry.focus();
+    return;
+  }
+
+  // Suppression de l'image Plage
+  let myImg = document.getElementsByClassName("plage");
+  for (var i = 0; i < myImg.length; i++) {
+    myImg[i].classList.add("display_None");
+  }
+  document.getElementById("divToDo").classList.add("to_Do")
+  document.getElementById("stylo2").classList.remove("display_None");
  
+  // Récupération de la tache
 
-let newTache = document.getElementById("saisie").value;
- console.log(newTache);
+  // Création d'une nouvelle ligne
+  newList = document.createElement("li"); // ajouter la classe
+  newList.classList += "to_Do_List";
+  increment += 1;
+  newList.id = "list_" + increment;
+  // Ajout element de liste; et l'associer à la div
+  newSpan = document.createElement("span"); // ajouter la classe
+  newSpan.innerText = toDoEntry.value;
+  newSpan.id = "span_" + increment;
+  newSpan.classList += "to_Do_Span";
 
- // Suppression des blancs à gauche et à droite de la zone de texte
- newTache = newTache.trim();
-          console.log(newTache); 
+  // Ajout du bouton de mise à jour
+  const newButton = document.createElement("button"); // ajouter la classe
+  newSpan.id;
+  newButton.addEventListener("click", modifTache.bind(null, newSpan.id));
+  newButton.innerText = "Modif";
+  newButton.id = "bt_" + increment;
+  newButton.classList += "to_Do_Button";
 
- // Vérification existance de la tache
- for (let newData in monTab) {
-   maDonnee = monTab[newData].toDo;
- if ((maDonnee == newTache)) {
+  // Ajout du bouton et texte dans la div
+  newList.appendChild(newButton);
+  newList.appendChild(newSpan);
 
-   console.log("existe déjà");
- }
- else {
-   function test() {
-     let obj = {
-       toDo: "test",
-       done: true,
-     };
+  // insert de la nouvelle ligne dans la liste préexistante dans html
+  const toDoList = document.getElementById("toDoList");
+  toDoList.appendChild(newList);
 
-     let donnees = JSON.stringify(obj);
-     const monFic = "./toDo.json";
-   }
+  // RAZ zone d'entrée
+  toDoEntry.value = "";
+  toDoEntry.focus();
+}
 
+function majTache() {
+  // Suppression des blancs
+  toDoEntry.value = toDoEntry.value.trim();
 
-   // Ajout de la tache
+  if (toDoEntry.value == "") {
+    alert("Veuillez saisir du texte avant de valider");
+    toDoEntry.value = "";
+    toDoEntry.focus();
+    return;
+  }
+  // Modification du texte dans la liste
+  document.getElementById(id_Svg).innerHTML = toDoEntry.value;
 
- }
+  document.getElementById(id_Svg).classList.remove("en_Cours");
+  // DéGriser tous les boutons clickables de la liste :
+  var myButton = document.querySelectorAll("button");
+  for (var i = 0; i < myButton.length; i++) {
+    myButton[i].disabled = false;
+  }
+  // Modification de l'état des boutons de Créat/maj/supp
+  styleNewLine();
+}
 
- }
+function delTache() {
+  var reponse = window.confirm("Etes-vous certain de supprimer cette tâche ?");
+  if (reponse == false) {
+    return;
+  }
 
- 
- // Modification d'une tache existante
- // Suppression d'une tache existante
+  // Suppression de la ligne dans la liste
+  document.getElementById(id_Svg).innerHTML = toDoEntry.value;
 
+  let bb = id_Svg.match(/(\d+)/);
+  let aa = "list_" + bb[0];
+  newList = document.getElementById(aa);
+
+  // Supprime tous les enfant d'un élément
+  while (newList.firstChild) {
+    newList.removeChild(newList.firstChild);
+  }
+  aa = "li_" + bb[0];
+  newList.remove(aa);
+  styleNewLine();
+}
+
+////////////////////////////////////////////////////////
+// Modification de l'état des boutons de Créat/maj/supp
+////////////////////////////////////////////////////////
+function styleNewLine() {
+  // En cours nouvelle ligne
+  // DéGriser tous les boutons clickables de la liste :
+  var myButton = document.querySelectorAll("button");
+  for (var i = 0; i < myButton.length; i++) {
+    myButton[i].disabled = false;
+  }
+  document.getElementById("maj_Line").disabled = true;
+  document.getElementById("del_Line").disabled = true;
+
+  toDoEntry.value = "";
+  toDoEntry.focus();
+
+  // Si aucune tâche à faire, Affichage de l'image Plage
+  if (myButton.length >= 3) {
+    let myImg = document.getElementsByClassName("plage");
+    for (var i = 0; i < myImg.length; i++) {
+      myImg[i].classList.remove("display_None");
+    }
+    document.getElementById("divToDo").classList.remove("to_Do");
+    document.getElementById("stylo2").classList.add("display_None");
+  }
+}
+
+function styleMajLine() {
+  // En cours de mise à jour
+  var myButton = document.querySelectorAll("button");
+  for (var i = 0; i < myButton.length; i++) {
+    myButton[i].disabled = true;
+  }
+  document.getElementById("maj_Line").disabled = false;
+  document.getElementById("del_Line").disabled = false;
+  document.getElementById("new_Line").disabled = true;
 }

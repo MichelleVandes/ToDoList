@@ -1,13 +1,12 @@
 body {
   background-color: #ebebeb;
-  color: blue;
+  color: #115B36;
   font-size: large;
   line-height: 2rem;
 }
 
-.conteneur{
-  display: table-cell;
-  vertical-align: middle;
+.conteneur {
+  display: flex;
 }
 
 .to_Do {
@@ -15,41 +14,52 @@ width: 80%;
 margin-top: 1rem;
 margin-left: 10%;
 height: auto;
-min-height: 200px;
- 
-  border: 1px solid black;
+border: 1px solid black;
+}
+
+.plage {
+width: 46%;
+ justify-content: center;
+}
+
+.display_None {
+display: none;
+}
+.display_On {
+display: flex
 }
 
 ul {
   list-style-type: none;
+}
+.stylo {
+  justify-content: end;
+  width: 8%;
 }
 
 
 .to_Do_Span {
   text-align: center;
   position: fixed;
-    margin-left: 2rem;
-
-
+  margin-left: 2rem;
 }
 
-.to_Do_Button {
-  justify-content: start;
-  /* margin-left: 2rem; */
-  text-align: center;
-  border-color: blue;
+
+
+button {
+  color: #115B36; 
 }
 
 
 .en_Cours {
-  background-color: rgb(231, 14, 184);
+background-color: #FCD7B2;
 }
 
 
 footer{
 line-height: 1rem;
 font-size: 0.6em;
-background:rgb(145, 135, 123);
+background:#FCD7B2;
 position:absolute;
 bottom:0;
 width:100%;
