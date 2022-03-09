@@ -4,7 +4,6 @@ let increment = 0;
 let id_Svg, newList, newSpan, newButton, newDiv, myButton;
 
 document.getElementById("maj_Line").disabled = true;
-document.getElementById("del_Line").disabled = true;
 
 // Ajouter une nouvelle ligne de tache to do :
 function newTache() {
@@ -39,13 +38,21 @@ function newTache() {
   newSpan.id = "span_" + increment;
   newSpan.classList += "to_Do_Span";
 
-  // Ajout du bouton de mise à jour
-  const newButton = document.createElement("button"); // ajouter la classe
-  newSpan.id;
+  // Bouton de mise à jour
+  newButton = document.createElement("button"); // ajouter la classe
   newButton.addEventListener("click", modifTacheEnCours.bind(null, newSpan.id));
   newButton.innerText = "Modif";
   newButton.id = "bt_" + increment;
   newButton.classList += "to_Do_Button";
+  newList.appendChild(newButton);
+
+  // Bouton de suppression
+  newButton = document.createElement("button"); // ajouter la classe
+  newButton.addEventListener("click", suppTacheEnCours.bind(null, newSpan.id));
+  newButton.innerText = "Supp";
+  newButton.id = "btS_" + increment;
+  newButton.classList += "to_Do_Button";
+  newList.appendChild(newButton);
 
   // Ajout du bouton et texte dans la div
   newList.appendChild(newButton);
@@ -83,29 +90,6 @@ function majTache() {
   styleNewLine();
 }
 
-function delTache() {
-  var reponse = window.confirm("Etes-vous certain de supprimer cette tâche ?");
-  if (reponse == false) {
-    return;
-  }
-
-  // Suppression de la ligne dans la liste
-  document.getElementById(id_Svg).innerHTML = toDoEntry.value;
-
-  let bb = id_Svg.match(/(\d+)/);
-  let aa = "list_" + bb[0];
-  newList = document.getElementById(aa);
-
-  // Supprime tous les enfant d'un élément
-  while (newList.firstChild) {
-    newList.removeChild(newList.firstChild);
-  }
-  aa = "li_" + bb[0];
-  newList.remove(aa);
-  styleNewLine();
-  affichagePlage(); 
-}
-
 function modifTacheEnCours(id_Recup) {
   // Récupération de la tache via le focus, soit n°liste active
   let spanMaj = document.getElementById(id_Recup);
@@ -124,11 +108,34 @@ function modifTacheEnCours(id_Recup) {
 
   // Modification de l'état des boutons de Créat/maj
   document.getElementById("maj_Line").disabled = false;
-  document.getElementById("del_Line").disabled = false;
+  // document.getElementById("del_Line").disabled = false;
   document.getElementById("new_Line").disabled = true;
   toDoEntry.focus();
   id_Svg = id_Recup;
   return id_Svg;
+}
+
+function suppTacheEnCours(id_Recup) {
+  var reponse = window.confirm("Etes-vous certain de supprimer cette tâche ?");
+  if (reponse == false) {
+    return;
+  }
+
+  // Suppression de la ligne dans la liste
+  document.getElementById(id_Recup).innerHTML = toDoEntry.value;
+
+  let bb = id_Recup.match(/(\d+)/);
+  let aa = "list_" + bb[0];
+  newList = document.getElementById(aa);
+
+  // Supprime tous les enfants d'un élément
+  while (newList.firstChild) {
+    newList.removeChild(newList.firstChild);
+  }
+  aa = "li_" + bb[0];
+  newList.remove(aa);
+  styleNewLine();
+  affichagePlage();
 }
 ////////////////////////////////////////////////////////
 // Modification de l'état des boutons de Créat/maj/supp
@@ -141,7 +148,7 @@ function styleNewLine() {
     myButton[i].disabled = false;
   }
   document.getElementById("maj_Line").disabled = true;
-  document.getElementById("del_Line").disabled = true;
+  // document.getElementById("del_Line").disabled = true;
 
   toDoEntry.value = "";
   toDoEntry.focus();
@@ -154,7 +161,6 @@ function styleMajLine() {
     myButton[i].disabled = true;
   }
   document.getElementById("maj_Line").disabled = false;
-  document.getElementById("del_Line").disabled = false;
   document.getElementById("new_Line").disabled = true;
 }
 
