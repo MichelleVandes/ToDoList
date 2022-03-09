@@ -1,9 +1,8 @@
 // Initialisation liste :
 const toDoEntry = document.getElementById("toDoEntry");
 let increment = 0;
-let id_Svg, newList, newSpan, newButton, newDiv, myButton;
+let id_Svg, newId, newList, newSpan, newButton, newDiv, myButton, allButtons, myImg;
 
-document.getElementById("maj_Line").disabled = true;
 
 // Ajouter une nouvelle ligne de tache to do :
 function newTache() {
@@ -18,7 +17,7 @@ function newTache() {
   }
 
   // Suppression de l'image Plage
-  let myImg = document.getElementsByClassName("plage");
+  myImg = document.getElementsByClassName("plage");
   for (var i = 0; i < myImg.length; i++) {
     myImg[i].classList.add("display_None");
   }
@@ -33,8 +32,9 @@ function newTache() {
   increment += 1;
   newList.id = "list_" + increment;
   // Ajout element de liste; et l'associer à la div
-  newSpan = document.createElement("span"); // ajouter la classe
-  newSpan.innerText = toDoEntry.value;
+  newSpan = document.createElement("input");
+  newSpan.disabled = true;
+  newSpan.value = toDoEntry.value;
   newSpan.id = "span_" + increment;
   newSpan.classList += "to_Do_Span";
 
@@ -58,6 +58,14 @@ function newTache() {
   newList.appendChild(newButton);
   newList.appendChild(newSpan);
 
+  // Bouton de validation de mise à jour
+  newButton = document.createElement("button"); // ajouter la classe
+  newButton.addEventListener("click", validTacheEnCours.bind(null, newSpan.id));
+  newButton.innerText = "Valider";
+  newButton.id = "btV_" + increment;
+  newButton.classList += "display_None ";
+  newList.appendChild(newButton);
+
   // insert de la nouvelle ligne dans la liste préexistante dans html
   const toDoList = document.getElementById("toDoList");
   toDoList.appendChild(newList);
@@ -67,50 +75,32 @@ function newTache() {
   toDoEntry.focus();
 }
 
-function majTache() {
-  // Suppression des blancs
-  toDoEntry.value = toDoEntry.value.trim();
-
-  if (toDoEntry.value == "") {
-    alert("Veuillez saisir du texte avant de valider");
-    toDoEntry.value = "";
-    toDoEntry.focus();
-    return;
-  }
-  // Modification du texte dans la liste
-  document.getElementById(id_Svg).innerHTML = toDoEntry.value;
-
-  document.getElementById(id_Svg).classList.remove("en_Cours");
-  // DéGriser tous les boutons clickables de la liste :
-  var myButton = document.querySelectorAll("button");
-  for (var i = 0; i < myButton.length; i++) {
-    myButton[i].disabled = false;
-  }
-  // Modification de l'état des boutons de Créat/maj/supp
-  styleNewLine();
-}
 
 function modifTacheEnCours(id_Recup) {
   // Récupération de la tache via le focus, soit n°liste active
   let spanMaj = document.getElementById(id_Recup);
 
   spanMaj.classList.add("en_Cours");
+  spanMaj.disabled = false;
+  spanMaj.focus();
 
-  // Bascule du texte dans zone de saisie
-  console.log("span.texte : ", spanMaj.innerHTML);
-  document.getElementById("toDoEntry").value = spanMaj.innerHTML;
+  let bb = id_Recup.match(/(\d+)/);
+  newId = "bt_" + bb[0];
+  document.getElementById(newId).classList.add("display_None");
+  newId = "btS_" + bb[0];
+  document.getElementById(newId).classList.add("display_None");
+  newId = "btV_" + bb[0];
+  document.getElementById(newId).classList.remove("display_None");
+  
 
   // Griser tous les boutons clickables de la liste :
-  var myButton = document.querySelectorAll("button");
-  for (var i = 0; i < myButton.length; i++) {
-    myButton[i].disabled = true;
+  allButtons = document.querySelectorAll("button");
+  for (var i = 0; i < allButtons.length; i++) {
+    allButtons[i].disabled = true;
   }
 
-  // Modification de l'état des boutons de Créat/maj
-  document.getElementById("maj_Line").disabled = false;
-  // document.getElementById("del_Line").disabled = false;
-  document.getElementById("new_Line").disabled = true;
-  toDoEntry.focus();
+  // Modification de l'état du bouton de Créat
+  document.getElementById(newId).disabled = false;
   id_Svg = id_Recup;
   return id_Svg;
 }
@@ -125,18 +115,36 @@ function suppTacheEnCours(id_Recup) {
   document.getElementById(id_Recup).innerHTML = toDoEntry.value;
 
   let bb = id_Recup.match(/(\d+)/);
-  let aa = "list_" + bb[0];
-  newList = document.getElementById(aa);
+ newId = "list_" + bb[0];
+  newList = document.getElementById(newId);
 
   // Supprime tous les enfants d'un élément
   while (newList.firstChild) {
     newList.removeChild(newList.firstChild);
   }
-  aa = "li_" + bb[0];
-  newList.remove(aa);
+  newId = "li_" + bb[0];
+  newList.remove(newId);
   styleNewLine();
   affichagePlage();
 }
+
+function validTacheEnCours(id_Recup) {
+  // Récupération de la tache via le focus, soit n°liste active
+  let spanMaj = document.getElementById(id_Recup);
+
+  spanMaj.classList.remove("en_Cours");
+  spanMaj.disabled = true;
+  let bb = id_Recup.match(/(\d+)/);
+  newId = "bt_" + bb[0];
+  document.getElementById(newId).classList.remove("display_None");
+  newId = "btS_" + bb[0];
+  document.getElementById(newId).classList.remove("display_None");
+  newId = "btV_" + bb[0];
+  document.getElementById(newId).classList.add("display_None");
+  toDoEntry.focus();
+styleNewLine()
+}
+
 ////////////////////////////////////////////////////////
 // Modification de l'état des boutons de Créat/maj/supp
 ////////////////////////////////////////////////////////
@@ -147,8 +155,6 @@ function styleNewLine() {
   for (var i = 0; i < myButton.length; i++) {
     myButton[i].disabled = false;
   }
-  document.getElementById("maj_Line").disabled = true;
-  // document.getElementById("del_Line").disabled = true;
 
   toDoEntry.value = "";
   toDoEntry.focus();
@@ -156,24 +162,23 @@ function styleNewLine() {
 
 function styleMajLine() {
   // En cours de mise à jour
-  myButton = document.querySelectorAll("button");
-  for (var i = 0; i < myButton.length; i++) {
-    myButton[i].disabled = true;
+  allButtons = document.querySelectorAll("button");
+  for (var i = 0; i < allButtons.length; i++) {
+    allButtons[i].disabled = true;
   }
-  document.getElementById("maj_Line").disabled = false;
   document.getElementById("new_Line").disabled = true;
 }
 
 function affichagePlage() {
   // Si aucune tâche à faire, Affichage de l'image Plage
-  myButton = document.querySelectorAll("button");
-  console.log("Nb Btn suite suppression ", myButton.length);
-  if ((myButton.length = 3)) {
-    let myImg = document.getElementsByClassName("plage");
-    for (var i = 0; i < myImg.length; i++) {
-      myImg[i].classList.remove("display_None");
-    }
-   // document.getElementById("divToDo").classList.remove("to_Do");
-    document.getElementById("stylo2").classList.add("display_None");
-  }
+  allButtons = document.querySelectorAll("button");
+  console.log("Nb Btn suite suppression ", allButtons.length);
+  // if (allButtons.length = 1) {
+  //   myImg = document.getElementsByClassName("plage");
+  //   for (var i = 0; i < myImg.length; i++) {
+  //     myImg[i].classList.remove("display_None");
+  //   }
+  //  // document.getElementById("divToDo").classList.remove("to_Do");
+  //   document.getElementById("stylo2").classList.add("display_None");
+  // }
 }
