@@ -6,6 +6,8 @@ let id_Svg, newId, newList, newSpan, newButton, newDiv, myButton, allButtons, my
 
 // Ajouter une nouvelle ligne de tache to do :
 function newTache() {
+  console.log("Debut newTache");
+
   // Suppression des blancs
   toDoEntry.value = toDoEntry.value.trim();
 
@@ -73,6 +75,7 @@ function newTache() {
   // RAZ zone d'entrée
   toDoEntry.value = "";
   toDoEntry.focus();
+  console.log("fin newTache");
 }
 
 
@@ -171,14 +174,11 @@ function styleMajLine() {
 
 function affichagePlage() {
   // Si aucune tâche à faire, Affichage de l'image Plage
-  allButtons = document.querySelectorAll("button");
-  console.log("Nb Btn suite suppression ", allButtons.length);
-  // if (allButtons.length = 1) {
-  //   myImg = document.getElementsByClassName("plage");
-  //   for (var i = 0; i < myImg.length; i++) {
-  //     myImg[i].classList.remove("display_None");
-  //   }
-  //  // document.getElementById("divToDo").classList.remove("to_Do");
-  //   document.getElementById("stylo2").classList.add("display_None");
-  // }
+   if (document.querySelector("li") == null) {
+   myImg = document.getElementsByClassName("plage");
+   for (var i = 0; i < myImg.length; i++) {
+      myImg[i].classList.remove("display_None");
+    }
+    document.getElementById("stylo2").classList.add("display_None");
+  }
 }
